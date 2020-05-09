@@ -11,29 +11,17 @@ public class Karincayiyen extends Canli {
 
     public void karincaYe(ArrayList<Karinca> karincalar) {
         if (karincalar != null) {
-            int karinca_sayisi = karincalar.size();
-            ArrayList<Virus> virusler = new ArrayList<>();
-
-
-            for (int i = 0; i < karinca_sayisi; i++) {
-                Canli karinca = karincalar.get(i);
-
-
-                for (int j = 0; j < karinca.getkVirusler().size(); j++) {
-                    Virus v = karinca.getkVirusler().get(j);
-                    boolean var_mi = false;
-                    for (int k = 0; k < virusler.size(); k++) {
-                        if (virusler.get(k) == v){
-                            var_mi = true;
+            for (int i = 0; i < karincalar.size(); i++) {
+                if (karincalar.get(i) != null){
+                    if (karincalar.get(i).getkVirusler() != null){
+                        for (int j = 0; j < karincalar.get(i).getkVirusler().size(); j++) {
+                                if (!this.kVirusler.contains(karincalar.get(i).getkVirusler().get(j))){
+                                    this.kVirusler.add(karincalar.get(i).getkVirusler().get(j));
+                            }
                         }
-                    }
-                    if (!var_mi){
-                        virusler.add(v);
                     }
                 }
             }
-            this.setkVirusler(virusler);
-
         }
     }
 

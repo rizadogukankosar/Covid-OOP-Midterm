@@ -57,6 +57,13 @@ public abstract class Virus implements Comparable{
     public abstract void mutasyonaUgra(Virus other);
 
     public abstract boolean hastaEdiyormu(Canli other);
+    public boolean testMethod(Virus v){
+        if (v.getClass() == this.getClass()){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 
 }

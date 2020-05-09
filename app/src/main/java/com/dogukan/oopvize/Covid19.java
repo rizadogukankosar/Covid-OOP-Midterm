@@ -17,7 +17,12 @@ public class Covid19 extends Virus{
 
     @Override
     public boolean hastaEdiyormu(Canli other) {
-        return true;
+        if(other.getClass() == Insan.class){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 

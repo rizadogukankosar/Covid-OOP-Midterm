@@ -3,46 +3,59 @@ package com.dogukan.oopvize;
 import java.util.ArrayList;
 
 public class Insan extends Canli {
-    private String meslek;
-    private Canli[] canlilar;
+     String meslek;
+     Canli[] canlilar;
 
     public Insan(String ad, int yas,String meslek) {
         super(ad, yas);
         this.meslek = meslek;
+
     }
 
     @Override
     public void hastalikKapv2(ArrayList<Canli> canlilar) {
-
-        if (!canlilar.isEmpty()){
-            int canli_sayisi = canlilar.size();
-            int this_canli_sayisi = this.canlilar.length;
-            ArrayList<Canli> yeni_canli_listesi = new ArrayList<>();
-            for (int i = 0; i < this_canli_sayisi; i++) {
-                int a =0;
-                Canli canli = this.canlilar[i];
-                for (int j = 0; j < canli_sayisi; j++) {
-                    if (canli == canlilar.get(j)){
-                        a++;
+        ArrayList<Canli> canlis = canlilar;
+            if (this.canlilar == null) {
+                if (!canlilar.isEmpty()){
+                    ArrayList<Virus> virusler = new ArrayList<>();
+                    int canli_sayisi = canlis.size();
+                    for (int i = 0; i < canli_sayisi; i++) {
+                        if (canlis.get(i).getkVirusler() != null) {
+                            for (int j = 0; j < canlis.get(i).getkVirusler().size(); j++) {
+                                virusler.add(canlis.get(i).getkVirusler().get(j));
+                            }
+                        }
                     }
+
+                    this.hastalikKap(virusler);
+
                 }
-                if (a == 0){
-                    yeni_canli_listesi.add(canli);
+            }else{
+                if (!canlilar.isEmpty()) {
+                    int length = this.canlilar.length;
+                    for (int i = 0; i < length; i++) {
+                        for (int j = 0; j < canlis.size(); j++) {
+                            if (canlis.size() > i){
+                                if (canlis.get(j).getClass() == this.canlilar[i].getClass()){
+                                    canlis.remove(j);
+                                }
+                            }
+                        }
+                    }
+                    ArrayList<Virus> virusler = new ArrayList<>();
+                    int canli_sayisi = canlis.size();
+                    for (int i = 0; i < canli_sayisi; i++) {
+                        if (canlis.get(i).getkVirusler() != null) {
+                            for (int j = 0; j < canlis.get(i).getkVirusler().size(); j++) {
+                                virusler.add(canlis.get(i).getkVirusler().get(j));
+                            }
+                        }
+                    }
+                    this.hastalikKap(virusler);
                 }
+
             }
 
-
-            ArrayList<Virus> virusler = new ArrayList<>();
-            for (int i = 0; i < canli_sayisi; i++) {
-                if (!yeni_canli_listesi.get(i).getkVirusler().isEmpty()) {
-                    for (int j = 0; j < yeni_canli_listesi.get(i).getkVirusler().size(); j++) {
-                        virusler.add(yeni_canli_listesi.get(i).getkVirusler().get(j));
-                    }
-                }
-            }
-            hastalıkKap(virusler);
-
-        }
 
     }
 
