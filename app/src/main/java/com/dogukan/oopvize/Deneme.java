@@ -33,8 +33,8 @@ public class Deneme {
         denenecek_virusler.add(v4);
         denenecek_virusler.add(v5);
 
-        cnl.setkVirusler(kVirus);
-        cnl.hastalikKap(denenecek_virusler);
+       // cnl.setkVirusler(kVirus);
+      //  cnl.hastalikKap(denenecek_virusler);
 
 
 /*

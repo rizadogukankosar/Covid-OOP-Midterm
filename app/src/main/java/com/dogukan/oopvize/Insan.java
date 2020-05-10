@@ -35,9 +35,10 @@ public class Insan extends Canli {
                     int length = this.canlilar.length;
                     for (int i = 0; i < length; i++) {
                         for (int j = 0; j < canlis.size(); j++) {
-                            if (canlis.size() > i){
+                            if (canlis.size() > j){
                                 if (canlis.get(j).getClass() == this.canlilar[i].getClass()){
                                     canlis.remove(j);
+                                    j--;
                                 }
                             }
                         }

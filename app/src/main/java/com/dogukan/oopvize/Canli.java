@@ -126,17 +126,82 @@ public class Canli implements Comparable{
 
         if (canlilar != null){
             int canli_sayisi = canlilar.length;
-
             for (int i =0; i < canli_sayisi;i++){
-                ArrayList<Virus> v = canlilar[i].getkVirusler();
-                if(v != null) {
-                    for (int j = 0; j < v.size(); j++) {
-                        double bulasma_miktarı_temp = v.get(j).getBulasmaMiktari();
-
-
-
+                ArrayList<Canli> diger_canlilar = new ArrayList<>();
+                for (int j = 0; j < canli_sayisi ; j++) {
+                    if (i != j){
+                        diger_canlilar.add(canlilar[j]);
                     }
                 }
+
+              //  canlilar[i].hastalikKapv2(diger_canlilar);
+                if (!diger_canlilar.isEmpty()){
+                    ArrayList<Virus> virusler = new ArrayList<>();
+
+                    for (int j = 0; j < diger_canlilar.size(); j++) {
+                        if (diger_canlilar.get(j).getkVirusler() != null) {
+                            for (int k = 0; k < diger_canlilar.get(j).getkVirusler().size(); k++) {
+                                virusler.add(diger_canlilar.get(j).getkVirusler().get(k));
+                            }
+                        }
+                    }
+                    if (virusler != null){
+                        ArrayList<Virus> virus_list = virusler;
+                        int virus_sayisi = virus_list.size();
+                        for (int j = 0; j < virus_sayisi ; j++) {
+                            if (j < virus_list.size()) {
+                                if (virus_list.get(j) != null) {
+                                    Virus v = virus_list.get(j);
+                                    if (v.hastaEdiyormu(this)) {
+                                        double bulasma_orani_toplam = 0;
+                                        int virus_counter = 0;
+                                        for (int k = 0; k < virus_list.size(); k++) {
+                                            if (virus_list.get(k) != null) {
+                                                if (virus_list.get(k).getClass() == v.getClass()) {
+                                                    double bulasmaMiktariTemp = virus_list.get(k).getBulasmaMiktari();
+                                                    bulasma_orani_toplam += bulasmaMiktariTemp;
+                                                    virus_counter++;
+                                                    virus_list.remove(k);
+                                                    virus_list.add(k, null);
+                                                }
+                                            }
+                                        }
+                                        int a = 65465;
+                                        for (int k = 0; k < canlilar[i].getkVirusler().size(); k++) {
+                                            if (canlilar[i].getkVirusler().get(k).getClass() == v.getClass()) {
+                                                double bulasmaMiktariTemp = canlilar[i].getkVirusler().get(k).getBulasmaMiktari();
+                                                bulasma_orani_toplam += bulasmaMiktariTemp;
+                                                virus_counter++;
+                                                a = k;
+                                            }
+                                        }
+                                        v.setBulasmaMiktari(bulasma_orani_toplam / virus_counter);
+                                        Virus virus;
+                                        if (v.getClass() == Covid19.class){
+                                            virus = new Covid19(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
+                                        }else if (v.getClass() == Covid20.class){
+                                            virus = new Covid20(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
+                                        }else {
+                                            virus = new Covid21(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
+                                        }
+
+                                        if (a != 65465) {
+                                            canlilar[i].getkVirusler().remove(a);
+                                            canlilar[i].getkVirusler().add(a, virus);
+                                        } else {
+                                            canlilar[i].getkVirusler().add(virus);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+
+
+
             }
         }
 
