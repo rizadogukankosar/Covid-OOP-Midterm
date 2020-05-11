@@ -38,4 +38,5 @@ public class Karinca extends Canli {
         }
 
     }
+
 }

@@ -49,7 +49,16 @@ public class Canli implements Comparable{
 
     public void hastalikKap(ArrayList<Virus> virusler) {
         if (virusler != null){
-            ArrayList<Virus> virus_list = virusler;
+            ArrayList<Virus> virus_list = new ArrayList<>();
+            for (int i = 0; i < virusler.size(); i++) {
+                if (virusler.get(i).getClass() == Covid19.class){
+                    Virus virus = new Covid19(virusler.get(i).getAd(),virusler.get(i).getBulasmaMiktari(),virusler.get(i).getGuc());
+                }else if (virusler.get(i).getClass() == Covid20.class){
+                    Virus virus = new Covid20(virusler.get(i).getAd(),virusler.get(i).getBulasmaMiktari(),virusler.get(i).getGuc());
+                }else{
+                    Virus virus = new Covid21(virusler.get(i).getAd(),virusler.get(i).getBulasmaMiktari(),virusler.get(i).getGuc());
+                }
+            }
             int virus_sayisi = virus_list.size();
             for (int i = 0; i < virus_sayisi ; i++) {
                 if (i < virus_list.size()) {
@@ -115,8 +124,6 @@ public class Canli implements Comparable{
                 }
             }
             this.hastalikKap(virusler);
-
-
         }
 
     }
@@ -130,7 +137,18 @@ public class Canli implements Comparable{
                 ArrayList<Canli> diger_canlilar = new ArrayList<>();
                 for (int j = 0; j < canli_sayisi ; j++) {
                     if (i != j){
-                        diger_canlilar.add(canlilar[j]);
+                        if (canlilar[j].getClass() == Insan.class){
+                            Canli canli = new Insan(canlilar[j].getAd(),canlilar[j].getYas(),"hakim");
+                            diger_canlilar.add(canli);
+                        }else if (canlilar[j].getClass() == Karinca.class){
+
+                            Canli canli = new Karinca(canlilar[j].getAd(),canlilar[j].getYas());
+                            diger_canlilar.add(canli);
+                        }else{
+                            Canli canli = new Karincayiyen(canlilar[j].getAd(),canlilar[j].getYas());
+                            diger_canlilar.add(canli);
+                        }
+
                     }
                 }
 

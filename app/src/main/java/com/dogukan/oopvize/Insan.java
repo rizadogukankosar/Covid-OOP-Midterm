@@ -14,34 +14,34 @@ public class Insan extends Canli {
 
     @Override
     public void hastalikKapv2(ArrayList<Canli> canlilar) {
-        ArrayList<Canli> canlis = canlilar;
+
+
             if (this.canlilar == null) {
-                if (!canlilar.isEmpty()){
-                    ArrayList<Virus> virusler = new ArrayList<>();
-                    int canli_sayisi = canlis.size();
-                    for (int i = 0; i < canli_sayisi; i++) {
-                        if (canlis.get(i).getkVirusler() != null) {
-                            for (int j = 0; j < canlis.get(i).getkVirusler().size(); j++) {
-                                virusler.add(canlis.get(i).getkVirusler().get(j));
-                            }
-                        }
-                    }
-
-                    this.hastalikKap(virusler);
-
-                }
-            }else{
+                super.hastalikKapv2(canlilar);
+            } else{
                 if (!canlilar.isEmpty()) {
-                    int length = this.canlilar.length;
-                    for (int i = 0; i < length; i++) {
-                        for (int j = 0; j < canlis.size(); j++) {
-                            if (canlis.size() > j){
-                                if (canlis.get(j).getClass() == this.canlilar[i].getClass()){
-                                    canlis.remove(j);
-                                    j--;
-                                }
+                    ArrayList<Canli> canlis = new ArrayList<>();
+                    for (int i = 0; i < canlilar.size() ; i++) {
+                        boolean var_mi = false;
+                        for (int j = 0; j < this.canlilar.length; j++) {
+                            if (this.canlilar[j].getClass() == canlilar.get(i).getClass()){
+                                var_mi = true;
                             }
                         }
+                        if (!var_mi){
+                            canlis.add(canlilar.get(i));
+                        }
+
+              /*  if (canlilar.get(i).getClass() == Insan.class) {
+                    Canli canli = new Insan(canlilar.get(i).getAd(), canlilar.get(i).getYas(), "doktor");
+                    canlis.add(canli);
+                } else if (canlilar.get(i).getClass() == Karinca.class) {
+                    Canli canli = new Karinca(canlilar.get(i).getAd(), canlilar.get(i).getYas());
+                    canlis.add(canli);
+                } else {
+                    Canli canli = new Karincayiyen(canlilar.get(i).getAd(), canlilar.get(i).getYas());
+                    canlis.add(canli);
+                }*/
                     }
                     ArrayList<Virus> virusler = new ArrayList<>();
                     int canli_sayisi = canlis.size();
@@ -55,10 +55,11 @@ public class Insan extends Canli {
                     this.hastalikKap(virusler);
                 }
 
-            }
 
 
+        }
     }
+
 
 
 }
