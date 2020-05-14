@@ -1,8 +1,12 @@
 package com.dogukan.oopvize;
 
 public class Covid20 extends Virus {
-    public Covid20(String ad, double bulasmaMiktari, double guc) {
+
+
+    public Covid20(String ad, double bulasmaMiktari, double guc){
         super(ad, bulasmaMiktari, guc);
+
+
     }
 
     @Override

@@ -1,13 +1,15 @@
 package com.dogukan.oopvize;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
 
 public class Deneme {
     public static void main(String[] args) {
         Canli c = new Karincayiyen("karincayiyen",5);
-        Canli cnl = new Karinca("karinca",5);
+        Karinca cnl = new Karinca("karinca",5);
         Canli cn = new Insan("doğu",19,"Mühendis");
+
+
 
 
         ArrayList<Virus> denenecek_virusler = new ArrayList<>();
@@ -17,6 +19,10 @@ public class Deneme {
         denenecek_canlilar.add(c);
         denenecek_canlilar.add(cn);
         cnl.hastalikKapv2(denenecek_canlilar);
+        Canli[] ccc = {c,c,c,cn,c};
+        System.out.println(cnl.kYiyenSayisi);
+        cnl.hastalikKap(ccc);
+        System.out.println(cnl.kYiyenSayisi);
 
         ArrayList<Virus> kVirus = new ArrayList<>();
         ArrayList<Virus> kVirus2 = new ArrayList<>();

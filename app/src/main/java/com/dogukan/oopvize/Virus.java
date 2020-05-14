@@ -1,15 +1,18 @@
 package com.dogukan.oopvize;
 
 public abstract class Virus implements Comparable{
-    private String ad;
-    private double bulasmaMiktari;
-    private double guc;
+    public String ad;
+    public double bulasmaMiktari;
+    public double guc;
 
 
-    public Virus (String ad,double bulasmaMiktari, double guc){
+
+    public Virus(String ad, double bulasmaMiktari, double guc)
+    {
         this.ad = ad;
         this.bulasmaMiktari = bulasmaMiktari;
         this.guc = guc;
+
     }
 
     public Virus (Virus v){
@@ -44,26 +47,19 @@ public abstract class Virus implements Comparable{
     }
 
 
-
-
-    public int compareTo(Object o){
+    public int compareTo(Object o) {
         if (this.getClass() == o.getClass()){
             return 1;
         }else {
             return 0;
         }
+
     }
 
     public abstract void mutasyonaUgra(Virus other);
-
     public abstract boolean hastaEdiyormu(Canli other);
-    public boolean testMethod(Virus v){
-        if (v.getClass() == this.getClass()){
-            return true;
-        }else {
-            return false;
-        }
-    }
+
+
 
 
 }
