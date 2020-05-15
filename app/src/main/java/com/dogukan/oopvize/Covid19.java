@@ -9,14 +9,14 @@ public class Covid19 extends Virus{
     }
     @Override
     public void mutasyonaUgra(Virus other) {
-        if (other.getClass() == Covid21.class){
+        if (other instanceof Covid21){
             this.setGuc(this.getGuc()*2);
         }
     }
 
     @Override
     public boolean hastaEdiyormu(Canli other) {
-        if(other.getClass() == Insan.class){
+        if(other instanceof Insan){
             return true;
         }else{
             return false;

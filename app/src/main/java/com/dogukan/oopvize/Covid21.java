@@ -9,7 +9,7 @@ public class Covid21 extends Virus {
 
     @Override
     public void mutasyonaUgra(Virus other) {
-        if (other.getClass() == Covid21.class){
+        if (other instanceof Covid21){
             this.setGuc(this.getGuc()*3);
         }
 
@@ -17,7 +17,7 @@ public class Covid21 extends Virus {
 
     @Override
     public boolean hastaEdiyormu(Canli other) {
-        if(other.getClass() == Insan.class || other.getClass() == Karincayiyen.class){
+        if(other instanceof Insan || other instanceof Karincayiyen){
             return true;
         }else{
             return false;

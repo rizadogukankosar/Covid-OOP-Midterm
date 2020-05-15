@@ -15,13 +15,32 @@ public class Insan extends Canli {
 
 
     public  void hastalikKapv2(ArrayList<Canli> canlilar){
-        /* BURADA EĞER BİRLİKTE YAŞADIĞI CANLILAR LİSTESİ BOŞSA
-           NORMALDE ÇALIŞACAK METHODUN AYNISINI YAZDIM. AMA PARAMETRE
-           OLARAK GELEN ARRAYE DOKUNMAK İSTEMEDİĞİMİZ İÇİN ARRAYİN
-           BİR KOPYASINI OLUŞTURARAK İŞE BAŞLADIM
-        */
+
         if (this.canlilar == null) {
-            super.hastalikKapv2(canlilar);
+            if (!canlilar.isEmpty()){
+                ArrayList<Virus> virusler = new ArrayList<>();
+
+                for (int i = 0; i < canlilar.size(); i++) {
+                    if (!canlilar.get(i).getkVirusler().isEmpty()) {
+                        virusler.addAll(canlilar.get(i).getkVirusler());
+                    }
+                }
+                hastalikKap(virusler);
+
+            }
+            int kYiyen_sayisi = 0;
+            for (int i = 0; i <canlilar.size() ; i++) {
+                if (canlilar.get(i) instanceof Karincayiyen){
+                    kYiyen_sayisi +=1;
+                }
+            }
+            for (int i = 0; i < canlilar.size(); i++) {
+                if (canlilar.get(i) instanceof Karinca){
+                    Karinca karinca = (Karinca) canlilar.get(i);
+                    karinca.kYiyenSayisi += kYiyen_sayisi;
+                }
+            }
+
         } else{
             if (!canlilar.isEmpty()) {
                 ArrayList<Canli> canlis = new ArrayList<>();
@@ -35,8 +54,6 @@ public class Insan extends Canli {
                     if (!var_mi){
                         canlis.add(canlilar.get(i));
                     }
-
-
                 }
                 ArrayList<Virus> virusler = new ArrayList<>();
                 int canli_sayisi = canlis.size();

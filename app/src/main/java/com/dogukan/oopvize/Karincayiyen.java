@@ -12,7 +12,7 @@ public class Karincayiyen extends Canli {
     }
 
     public void karincaYe(ArrayList<Karinca> karincalar){
-        if (karincalar != null) {
+        if (!karincalar.isEmpty()) {
             for (int i = 0; i < karincalar.size(); i++) {
                 if (karincalar.get(i) != null){
                     karincalar.get(i).kYiyenSayisi++;

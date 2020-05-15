@@ -55,10 +55,10 @@ public class Canli implements Comparable{
         if (virusler != null){
             ArrayList<Virus> virus_list = new ArrayList<>();
             for (int i = 0; i < virusler.size(); i++) {
-                if (virusler.get(i).getClass() == Covid19.class){
+                if (virusler.get(i) instanceof Covid19){
                     Virus virus = new Covid19(virusler.get(i).getAd(),virusler.get(i).getBulasmaMiktari(),virusler.get(i).getGuc());
                     virus_list.add(virus);
-                }else if (virusler.get(i).getClass() == Covid20.class){
+                }else if (virusler.get(i) instanceof Covid20){
                     Virus virus = new Covid20(virusler.get(i).getAd(),virusler.get(i).getBulasmaMiktari(),virusler.get(i).getGuc());
                     virus_list.add(virus);
 
@@ -86,7 +86,7 @@ public class Canli implements Comparable{
                                     }
                                 }
                             }
-                            int a = 65465;
+                            int a = 999999;
                             for (int j = 0; j < this.kVirusler.size(); j++) {
                                 if (this.kVirusler.get(j).getClass() == v.getClass()) {
                                     bulasma_orani_toplam += this.kVirusler.get(j).getBulasmaMiktari();
@@ -96,15 +96,15 @@ public class Canli implements Comparable{
                             }
                             v.setBulasmaMiktari(bulasma_orani_toplam / virus_counter);
                             Virus virus;
-                            if (v.getClass() == Covid19.class){
+                            if (v instanceof Covid19){
                                 virus = new Covid19(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
-                            }else if (v.getClass() == Covid20.class){
+                            }else if (v instanceof Covid20){
                                 virus = new Covid20(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
                             }else {
                                 virus = new Covid21(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
                             }
 
-                            if (a != 65465) {
+                            if (a != 999999) {
                                 this.kVirusler.remove(a);
                                 this.kVirusler.add(a, virus);
                             } else {
@@ -120,37 +120,32 @@ public class Canli implements Comparable{
     }
 
     public void hastalikKapv2(ArrayList<Canli> canlilar){
-        /* BURADA CANLILAR ARRAYİNDEKİ CANLILARDAKİ TÜM VİRÜSLERİ
-            BİR ARRAYDE BİRLEŞTİREREK YUKARIDAKİ hastalikKKap METHODUNA
-            GÖNDERDİM.
-        */
+
         if (!canlilar.isEmpty()){
             ArrayList<Virus> virusler = new ArrayList<>();
-            int canli_sayisi = canlilar.size();
-            for (int i = 0; i < canli_sayisi; i++) {
-                if (canlilar.get(i).getkVirusler() != null) {
-                    for (int j = 0; j < canlilar.get(i).getkVirusler().size(); j++) {
-                        virusler.add(canlilar.get(i).getkVirusler().get(j));
-                    }
+
+            for (int i = 0; i < canlilar.size(); i++) {
+                if (!canlilar.get(i).getkVirusler().isEmpty()) {
+                    virusler.addAll(canlilar.get(i).getkVirusler());
                 }
             }
             hastalikKap(virusler);
 
         }
-        int kYiyenler = 0;
+        int kYiyen_sayisi = 0;
         if (this.getClass() == Karincayiyen.class){
-            kYiyenler++;
+            kYiyen_sayisi++;
         }
 
         for (int i = 0; i <canlilar.size() ; i++) {
-            if (canlilar.get(i).getClass() == Karincayiyen.class){
-                kYiyenler++;
+            if (canlilar.get(i) instanceof Karincayiyen){
+                kYiyen_sayisi +=1;
             }
         }
         for (int i = 0; i < canlilar.size(); i++) {
-            if (canlilar.get(i).getClass() == Karinca.class){
-                Karinca k = (Karinca) canlilar.get(i);
-                k.kYiyenSayisi += kYiyenler;
+            if (canlilar.get(i) instanceof Karinca){
+                Karinca karinca = (Karinca) canlilar.get(i);
+                karinca.kYiyenSayisi += kYiyen_sayisi;
             }
         }
 
@@ -167,27 +162,92 @@ public class Canli implements Comparable{
                 }
             }
             for (int i = 0; i < canlilar.length; i++) {
-                ArrayList<Virus> v = new ArrayList<>();
-                v.addAll(canlilar[i].getkVirusler());
+                ArrayList<Virus> vrs = new ArrayList<>();
+                vrs.addAll(canlilar[i].getkVirusler());
                 virusler.removeAll(canlilar[i].getkVirusler());
-                canlilar[i].hastalikKap(virusler);
-                virusler.addAll(v);
+                if (virusler != null){
+                    ArrayList<Virus> virus_list = new ArrayList<>();
+                    for (int j = 0; j < virusler.size(); j++) {
+                        if (virusler.get(j) instanceof Covid19){
+                            Virus virus = new Covid19(virusler.get(j).getAd(),virusler.get(j).getBulasmaMiktari(),virusler.get(j).getGuc());
+                            virus_list.add(virus);
+                        }else if (virusler.get(j) instanceof Covid20){
+                            Virus virus = new Covid20(virusler.get(j).getAd(),virusler.get(j).getBulasmaMiktari(),virusler.get(j).getGuc());
+                            virus_list.add(virus);
+
+                        }else {
+                            Virus virus = new Covid21(virusler.get(j).getAd(),virusler.get(j).getBulasmaMiktari(),virusler.get(j).getGuc());
+                            virus_list.add(virus);
+
+                        }
+                    }
+                    int virus_sayisi = virus_list.size();
+                    for (int j = 0; j < virus_sayisi ; j++) {
+                        if (j < virus_list.size()) {
+                            if (virus_list.get(j) != null) {
+                                Virus v = virus_list.get(j);
+                                if (v.hastaEdiyormu(canlilar[i])) {
+                                    double bulasma_orani_toplam = 0;
+                                    int virus_counter = 0;
+                                    for (int k = 0; k < virus_list.size(); k++) {
+                                        if (virus_list.get(k) != null) {
+                                            if (virus_list.get(k).getClass() == v.getClass()) {
+                                                double bulasmaMiktariTemp = virus_list.get(k).getBulasmaMiktari();
+                                                bulasma_orani_toplam += bulasmaMiktariTemp;
+                                                virus_counter++;
+                                                virus_list.remove(k);
+                                                virus_list.add(k, null);
+                                            }
+                                        }
+                                    }
+                                    int a = 999999;
+                                    for (int k = 0; k < canlilar[i].kVirusler.size(); k++) {
+                                        if (canlilar[i].kVirusler.get(k).getClass() == v.getClass()) {
+                                            double bulasmaMiktariTemp = canlilar[i].kVirusler.get(k).getBulasmaMiktari();
+                                            bulasma_orani_toplam += bulasmaMiktariTemp;
+                                            virus_counter++;
+                                            a = k;
+                                        }
+                                    }
+                                    v.setBulasmaMiktari(bulasma_orani_toplam / virus_counter);
+                                    Virus virus;
+                                    if (v instanceof Covid19){
+                                        virus = new Covid19(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
+                                    }else if (v instanceof Covid20){
+                                        virus = new Covid20(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
+                                    }else {
+                                        virus = new Covid21(v.getAd(),v.getBulasmaMiktari(),v.getGuc());
+                                    }
+
+                                    if (a != 999999) {
+                                        canlilar[i].kVirusler.remove(a);
+                                        canlilar[i].kVirusler.add(a, virus);
+                                    } else {
+                                        canlilar[i].kVirusler.add(virus);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                virusler.addAll(vrs);
 
             }
             int kYiyenler = 0;
-            if (this.getClass() == Karincayiyen.class){
+            if (this instanceof Karincayiyen){
                 kYiyenler++;
             }
 
             for (int i = 0; i <canlilar.length ; i++) {
-                if (canlilar[i].getClass() == Karincayiyen.class){
+                if (canlilar[i] instanceof Karincayiyen){
                     kYiyenler++;
                 }
             }
             for (int i = 0; i < canlilar.length; i++) {
                 if (canlilar[i].getClass() == Karinca.class){
-                    Karinca k = (Karinca) canlilar[i];
-                    k.kYiyenSayisi += kYiyenler;
+                    Karinca karinca = (Karinca) canlilar[i];
+                    karinca.kYiyenSayisi += kYiyenler;
                 }
             }
         }

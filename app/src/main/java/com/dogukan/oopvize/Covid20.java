@@ -16,7 +16,7 @@ public class Covid20 extends Virus {
 
     @Override
     public boolean hastaEdiyormu(Canli other) {
-        if(other.getClass() == Insan.class  || other.getClass() == Karinca.class  || other.getClass() == Karincayiyen.class ){
+        if(other instanceof Insan  || other instanceof Karinca  || other instanceof Karincayiyen ){
             return true;
         }else{
             return false;
